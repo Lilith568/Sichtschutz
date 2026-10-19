@@ -3,7 +3,7 @@
 **Redact bank statements for public authorities – legally sound, locally in your browser, no upload.**
 *Deutsche Fassung weiter unten.*
 
-Try it: **https://lilith568.github.io/sichtschutz/** (mirror: https://cdn.jsdelivr.net/gh/lilith568/sichtschutz@main/index.html) · Interface in English and German.
+Try it: download `index.html` and open it in your browser. Interface in English and German.
 
 ## The problem
 
@@ -36,7 +36,7 @@ Planned for the funded phase:
 
 ## Technology
 
-TypeScript/JavaScript, no server component. pdf.js for text and layout, pdf-lib for rebuilding, Web Crypto for hashes. Rule pack as JSON (category, patterns, legal basis, locale). Open `index.html` locally or on GitHub Pages; it needs cdnjs.cloudflare.com (pdf.js, pdf-lib) and Google Fonts at load time, the processing itself runs offline.
+TypeScript/JavaScript, no server component. pdf.js for text and layout, pdf-lib for rebuilding, Web Crypto for hashes. Rule pack as JSON (category, patterns, legal basis, locale). Open `index.html` locally; it needs cdnjs.cloudflare.com (pdf.js, pdf-lib) and Google Fonts at load time, the processing itself runs offline.
 
 ## Contributing
 
@@ -58,7 +58,7 @@ Not legal advice. Agencies interpret the rules differently; if in doubt ask a co
 
 **Kontoauszüge für Behördenanträge rechtssicher schwärzen – lokal im Browser, ohne Upload.**
 
-Ausprobieren: **https://lilith568.github.io/sichtschutz/** (Spiegel: https://cdn.jsdelivr.net/gh/lilith568/sichtschutz@main/index.html) · Oberfläche auf Deutsch und Englisch.
+Ausprobieren: `index.html` herunterladen und im Browser öffnen. Oberfläche auf Deutsch und Englisch.
 
 ## Das Problem
 
