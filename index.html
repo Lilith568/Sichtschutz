@@ -149,6 +149,9 @@ pre{font:12px/1.45 var(--font-mono);background:var(--surface-2);border:1px solid
 footer{margin-top:28px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px}
 #toast{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);background:var(--fg);color:var(--bg);padding:10px 14px;border-radius:6px;font-size:14px;max-width:min(92vw,520px);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:10}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.topright{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.seg.lang button{min-height:32px;padding:4px 10px;font-size:13px}
+footer a{color:inherit}
 @media (prefers-reduced-motion: reduce){*{transition:none !important}}
 </style>
 </head>
@@ -160,67 +163,74 @@ footer{margin-top:28px;padding-top:14px;border-top:1px solid var(--line);font-si
     <div class="mark" aria-hidden="true"></div>
     <div>
       <h1>Sichtschutz</h1>
-      <p class="claim">Kontoauszüge für Behörden schwärzen. Rechtssicher, lokal im Browser.</p>
+      <p class="claim" data-i18n="claim">Kontoauszüge für Behörden schwärzen. Rechtssicher, lokal im Browser.</p>
     </div>
   </div>
-  <span class="badge">Prototyp 0.1 · Apache-2.0</span>
+  <div class="topright">
+    <div class="seg lang" role="group" aria-label="Sprache / Language">
+      <button type="button" data-lang="de" aria-pressed="true">Deutsch</button>
+      <button type="button" data-lang="en" aria-pressed="false">English</button>
+    </div>
+    <span class="badge" data-i18n="badge">Prototyp 0.1 · Apache-2.0</span>
+  </div>
 </header>
 
 <main class="app">
   <div class="controls">
 
     <section class="card" aria-labelledby="h-file">
-      <span class="eyebrow">Schritt 1 · Datei</span>
-      <h2 id="h-file">Kontoauszug als PDF</h2>
+      <span class="eyebrow" data-i18n="step1">Schritt 1 · Datei</span>
+      <h2 id="h-file" data-i18n="h_file">Kontoauszug als PDF</h2>
       <div class="drop" id="drop">
-        <p class="small">PDF hierher ziehen oder auswählen. Die Datei bleibt auf deinem Gerät.</p>
-        <label class="btn btn-primary" for="file">PDF auswählen<input type="file" id="file" accept="application/pdf,.pdf"></label>
-        <button class="btn btn-ghost" type="button" id="btn-sample">Beispiel laden</button>
+        <p class="small" data-i18n="drop">PDF hierher ziehen oder auswählen. Die Datei bleibt auf deinem Gerät.</p>
+        <label class="btn btn-primary" for="file"><span data-i18n="choose">PDF auswählen</span><input type="file" id="file" accept="application/pdf,.pdf"></label>
+        <button class="btn btn-ghost" type="button" id="btn-sample" data-i18n="sample">Beispiel laden</button>
       </div>
       <dl class="meta" id="meta" hidden>
-        <dt>Datei</dt><dd id="m-name">–</dd>
-        <dt>Seiten</dt><dd id="m-pages">–</dd>
+        <dt data-i18n="file">Datei</dt><dd id="m-name">–</dd>
+        <dt data-i18n="pages">Seiten</dt><dd id="m-pages">–</dd>
         <dt>SHA-256</dt><dd id="m-sha">–</dd>
       </dl>
-      <p class="note">Alles läuft in deinem Browser. Außer dem Laden der zwei Bibliotheken pdf.js und pdf-lib von cdnjs baut die Seite keine Verbindung auf.</p>
+      <p class="note" data-i18n="note_local">Alles läuft in deinem Browser. Außer dem Laden der zwei Bibliotheken pdf.js und pdf-lib von cdnjs baut die Seite keine Verbindung auf.</p>
     </section>
 
     <section class="card" aria-labelledby="h-rules">
-      <span class="eyebrow">Schritt 2 · Regeln</span>
-      <h2 id="h-rules">Was geschwärzt wird</h2>
-      <div class="seg" role="group" aria-label="Modus">
-        <button type="button" id="mode-streng" aria-pressed="true">Streng</button>
-        <button type="button" id="mode-erweitert" aria-pressed="false">Erweitert</button>
+      <span class="eyebrow" data-i18n="step2">Schritt 2 · Regeln</span>
+      <h2 id="h-rules" data-i18n="h_rules">Was geschwärzt wird</h2>
+      <div class="seg" role="group" aria-label="Modus" data-i18n-aria="mode">
+        <button type="button" id="mode-streng" aria-pressed="true" data-i18n="strict">Streng</button>
+        <button type="button" id="mode-erweitert" aria-pressed="false" data-i18n="extended">Erweitert</button>
       </div>
       <p class="note" id="mode-note">Streng: nur Ausgaben mit Treffern in den aktiven Kategorien. Entspricht dem BSG-Urteil.</p>
       <div class="cats" id="cats"></div>
       <div class="field">
-        <label for="custom" class="small">Eigene Begriffe (durch Komma getrennt)</label>
-        <input type="text" id="custom" placeholder="z. B. Dr. Berger, Selbsthilfegruppe">
+        <label for="custom" class="small" data-i18n="custom_label">Eigene Begriffe (durch Komma getrennt)</label>
+        <input type="text" id="custom" placeholder="z. B. Dr. Berger, Selbsthilfegruppe" data-i18n-placeholder="custom_ph">
       </div>
       <div class="legal">
-        <strong>Rechtsgrundlage.</strong> BSG, Urteil vom 19.09.2008, B 14 AS 45/07 R: Bei Ausgaben dürfen Empfänger und Verwendungszweck geschwärzt werden, soweit sie besondere Kategorien personenbezogener Daten offenlegen (§ 67 Abs. 12 SGB X, Art. 9 DSGVO). Beträge, Kontostände und alle Einnahmen bleiben sichtbar.
+        <strong data-i18n="legal_head">Rechtsgrundlage.</strong> <span data-i18n="legal_body">BSG, Urteil vom 19.09.2008, B 14 AS 45/07 R: Bei Ausgaben dürfen Empfänger und Verwendungszweck geschwärzt werden, soweit sie besondere Kategorien personenbezogener Daten offenlegen (§ 67 Abs. 12 SGB X, Art. 9 DSGVO). Beträge, Kontostände und alle Einnahmen bleiben sichtbar.</span>
       </div>
       <details>
-        <summary>Regelwerk als JSON anzeigen</summary>
+        <summary data-i18n="show_rules">Regelwerk als JSON anzeigen</summary>
         <pre id="rulepack-json"></pre>
       </details>
     </section>
 
     <section class="card" aria-labelledby="h-export">
-      <span class="eyebrow">Schritt 3 · Export</span>
-      <h2 id="h-export">Geschwärzte PDF erstellen</h2>
-      <p class="note">Alle Seiten werden als Bild neu aufgebaut: hinter den Balken liegt kein Text mehr. Angehängt wird ein Schwärzungsprotokoll mit Datum und Betrag jeder teilweise geschwärzten Buchung, der Rechtsgrundlage und der SHA-256-Prüfsumme des Originals. Die Art der Daten wird nie genannt.</p>
-      <button class="btn btn-primary" type="button" id="btn-export" disabled>PDF erstellen</button>
+      <span class="eyebrow" data-i18n="step3">Schritt 3 · Export</span>
+      <h2 id="h-export" data-i18n="h_export">Geschwärzte PDF erstellen</h2>
+      <p class="note" data-i18n="note_export">Alle Seiten werden als Bild neu aufgebaut: hinter den Balken liegt kein Text mehr. Angehängt wird ein Schwärzungsprotokoll mit Datum und Betrag jeder teilweise geschwärzten Buchung, der Rechtsgrundlage und der SHA-256-Prüfsumme des Originals. Die Art der Daten wird nie genannt.</p>
+      <button class="btn btn-primary" type="button" id="btn-export" disabled data-i18n="btn_export">PDF erstellen</button>
       <div class="progress" id="progress" hidden><i id="progress-bar"></i></div>
       <p class="small" id="export-status" hidden></p>
       <div id="download-box" hidden class="row">
-        <button class="btn" type="button" id="btn-download">Herunterladen</button>
+        <button class="btn" type="button" id="btn-download" data-i18n="btn_download">Herunterladen</button>
         <span class="small muted" id="download-name"></span>
       </div>
-      <p class="note" id="download-hint" hidden>Beim Speichern erscheint eine Bestätigung. Startet nichts, öffne die Datei index.html lokal oder über GitHub Pages; dort lädt der Browser die PDF direkt herunter.</p>
+      <p class="note" id="download-hint" hidden data-i18n="download_hint">Startet der Download nicht, prüfe, ob dein Browser Downloads für diese Seite blockiert.</p>
       <details>
-        <summary>Schwärzungsprotokoll (Vorschau)</summary>
+        <summary data-i18n="protocol_preview">Schwärzungsprotokoll (Vorschau)</summary>
+        <p class="small muted" data-i18n="protocol_lang" hidden></p>
         <pre id="protocol-preview">Noch keine Datei analysiert.</pre>
       </details>
     </section>
@@ -229,20 +239,20 @@ footer{margin-top:28px;padding-top:14px;border-top:1px solid var(--line);font-si
 
   <div class="review">
     <section class="card" aria-labelledby="h-review">
-      <span class="eyebrow">Prüfen</span>
-      <h2 id="h-review">Vor dem Export jede Buchung ansehen</h2>
+      <span class="eyebrow" data-i18n="review">Prüfen</span>
+      <h2 id="h-review" data-i18n="h_review">Vor dem Export jede Buchung ansehen</h2>
       <div class="stats" id="stats"><span class="muted small">Noch keine Datei geladen.</span></div>
       <div class="legend">
-        <span><i class="sw sw-bar"></i>wird geschwärzt</span>
-        <span><i class="sw sw-cat"></i>Treffer, Kategorie aus</span>
-        <span><i class="sw sw-flag"></i>Richtung unklar, bitte prüfen</span>
-        <span><i class="sw sw-in"></i>Einnahme, bleibt sichtbar</span>
+        <span><i class="sw sw-bar"></i><span data-i18n="lg_bar">wird geschwärzt</span></span>
+        <span><i class="sw sw-cat"></i><span data-i18n="lg_cat">Treffer, Kategorie aus</span></span>
+        <span><i class="sw sw-flag"></i><span data-i18n="lg_flag">Richtung unklar, bitte prüfen</span></span>
+        <span><i class="sw sw-in"></i><span data-i18n="lg_in">Einnahme, bleibt sichtbar</span></span>
       </div>
       <div id="review-msg" hidden></div>
       <div class="toolbar">
-        <p class="small muted">Tippen auf eine Buchung schaltet die Schwärzung um.</p>
+        <p class="small muted" data-i18n="tap_hint">Tippen auf eine Buchung schaltet die Schwärzung um.</p>
         <div class="zoom" role="group" aria-label="Zoom">
-          <button type="button" data-zoom="fit" aria-pressed="true">Anpassen</button>
+          <button type="button" data-zoom="fit" aria-pressed="true" data-i18n="fit">Anpassen</button>
           <button type="button" data-zoom="150" aria-pressed="false">150 %</button>
           <button type="button" data-zoom="200" aria-pressed="false">200 %</button>
         </div>
@@ -251,23 +261,23 @@ footer{margin-top:28px;padding-top:14px;border-top:1px solid var(--line);font-si
     </section>
 
     <section class="card" aria-labelledby="h-tx">
-      <span class="eyebrow">Buchungen</span>
-      <h2 id="h-tx">Erkannte Buchungen</h2>
+      <span class="eyebrow" data-i18n="tx">Buchungen</span>
+      <h2 id="h-tx" data-i18n="h_tx">Erkannte Buchungen</h2>
       <div class="txlist" id="txlist"><p class="muted small">Noch keine Datei geladen.</p></div>
     </section>
 
     <section class="card" id="result" hidden aria-labelledby="h-result">
-      <span class="eyebrow">Ergebnis</span>
-      <h2 id="h-result">So sieht die Datei aus, die du abgibst</h2>
+      <span class="eyebrow" data-i18n="result">Ergebnis</span>
+      <h2 id="h-result" data-i18n="h_result">So sieht die Datei aus, die du abgibst</h2>
       <div class="result-pages" id="result-pages"></div>
     </section>
   </div>
 </main>
 
 <footer>
-  <span>Sichtschutz · Prototyp 0.1</span>
-  <span>Lizenz Apache-2.0 · Quellcode folgt auf GitHub</span>
-  <span>Keine Rechtsberatung. Bei Unsicherheit eine Sozialberatungsstelle fragen.</span>
+  <span>Sichtschutz · <span data-i18n="proto">Prototyp 0.1</span></span>
+  <span><a href="https://github.com/lilith568/sichtschutz" data-i18n="source">Quellcode auf GitHub</a> · Apache-2.0</span>
+  <span data-i18n="no_advice">Keine Rechtsberatung. Bei Unsicherheit eine Sozialberatungsstelle fragen.</span>
 </footer>
 </div>
 <div id="toast" role="status" aria-live="polite"></div>
@@ -279,32 +289,129 @@ footer{margin-top:28px;padding-top:14px;border-top:1px solid var(--line);font-si
 'use strict';
 const PDFJS_WORKER='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 const $=s=>document.querySelector(s);
+
+/* ---------- i18n (UI only; the redaction record stays German, see I18N.*.protocol_lang) ---------- */
+const I18N={
+de:{
+  claim:'Kontoauszüge für Behörden schwärzen. Rechtssicher, lokal im Browser.', badge:'Prototyp 0.1 · Apache-2.0',
+  step1:'Schritt 1 · Datei', h_file:'Kontoauszug als PDF', drop:'PDF hierher ziehen oder auswählen. Die Datei bleibt auf deinem Gerät.', choose:'PDF auswählen', sample:'Beispiel laden', file:'Datei', pages:'Seiten',
+  note_local:'Alles läuft in deinem Browser. Außer dem Laden der zwei Bibliotheken pdf.js und pdf-lib von cdnjs baut die Seite keine Verbindung auf.',
+  step2:'Schritt 2 · Regeln', h_rules:'Was geschwärzt wird', mode:'Modus', strict:'Streng', extended:'Erweitert',
+  mode_strict:'Streng: nur Ausgaben mit Treffern in den aktiven Kategorien. Entspricht dem BSG-Urteil.',
+  mode_ext:'Erweitert: Empfänger und Verwendungszweck aller Ausgaben. Geht über das Urteil hinaus; das Jobcenter kann nachfragen. Beträge bleiben sichtbar.',
+  custom_label:'Eigene Begriffe (durch Komma getrennt)', custom_ph:'z. B. Dr. Berger, Selbsthilfegruppe',
+  legal_head:'Rechtsgrundlage.', legal_body:'BSG, Urteil vom 19.09.2008, B 14 AS 45/07 R: Bei Ausgaben dürfen Empfänger und Verwendungszweck geschwärzt werden, soweit sie besondere Kategorien personenbezogener Daten offenlegen (§ 67 Abs. 12 SGB X, Art. 9 DSGVO). Beträge, Kontostände und alle Einnahmen bleiben sichtbar.',
+  show_rules:'Regelwerk als JSON anzeigen',
+  grp_art9:'Besondere Kategorien (Art. 9 DSGVO) · vom Urteil gedeckt', grp_optional:'Weitere schutzwürdige Angaben · nicht ausdrücklich gedeckt', grp_custom:'Eigene Begriffe', hits:'{n} Treffer',
+  step3:'Schritt 3 · Export', h_export:'Geschwärzte PDF erstellen',
+  note_export:'Alle Seiten werden als Bild neu aufgebaut: hinter den Balken liegt kein Text mehr. Angehängt wird ein Schwärzungsprotokoll mit Datum und Betrag jeder teilweise geschwärzten Buchung, der Rechtsgrundlage und der SHA-256-Prüfsumme des Originals. Die Art der Daten wird nie genannt.',
+  btn_export:'PDF erstellen', btn_download:'Herunterladen', download_hint:'Startet der Download nicht, prüfe, ob dein Browser Downloads für diese Seite blockiert.',
+  protocol_preview:'Schwärzungsprotokoll (Vorschau)', protocol_lang:'', no_file_analyzed:'Noch keine Datei analysiert.',
+  review:'Prüfen', h_review:'Vor dem Export jede Buchung ansehen', lg_bar:'wird geschwärzt', lg_cat:'Treffer, Kategorie aus', lg_flag:'Richtung unklar, bitte prüfen', lg_in:'Einnahme, bleibt sichtbar',
+  tap_hint:'Tippen auf eine Buchung schaltet die Schwärzung um.', fit:'Anpassen',
+  tx:'Buchungen', h_tx:'Erkannte Buchungen', result:'Ergebnis', h_result:'So sieht die Datei aus, die du abgibst',
+  proto:'Prototyp 0.1', source:'Quellcode auf GitHub', no_advice:'Keine Rechtsberatung. Bei Unsicherheit eine Sozialberatungsstelle fragen.',
+  no_file:'Noch keine Datei geladen.', no_tx:'Keine Buchungen erkannt.', page_of:'Seite {i} von {n}', page_n:'Seite {i}', protocol:'Protokoll', page_abbr:'S. {i}',
+  booking:'Buchung', redacted_a:', geschwärzt', visible_a:', sichtbar', income:'Einnahme', unclear:'Richtung unklar', expense:'Ausgabe',
+  st_on:'Geschwärzt', st_off:'Sichtbar', st_in:'Bleibt sichtbar',
+  s_tx:'Buchungen', s_out:'Ausgaben', s_in:'Einnahmen', s_red:'geschwärzt', s_unk:'unklar', reset_manual:'Manuelle Änderungen zurücksetzen ({n})',
+  income_locked:'Einnahmen bleiben sichtbar. Das verlangt das BSG-Urteil B 14 AS 45/07 R.',
+  building_page:'Seite {i} von {n} wird neu aufgebaut …', attaching:'Schwärzungsprotokoll wird angehängt …', done:'Fertig: {kb} KB, {n} Seiten inklusive Protokoll.', export_failed:'Export fehlgeschlagen: {e}',
+  dl_started:'Download gestartet: {name}', dl_failed:'Download nicht möglich: {e}',
+  sample_loaded:'Beispiel geladen: ein erfundener Kontoauszug der „Musterbank“. Eigene Datei oben auswählen.', analyzing:'Datei wird analysiert …',
+  scan:'Diese PDF enthält keinen Text, vermutlich ein Scan. Texterkennung (OCR) ist für Version 2 geplant. Bitte den digitalen Kontoauszug aus dem Online-Banking verwenden.',
+  no_tx_format:'Text gefunden, aber keine Buchungen erkannt. Dieses Format kennt der Prototyp noch nicht. Eine Rückmeldung mit Bankname hilft.',
+  unknown_dir:'{n} Buchungen haben keine erkennbare Richtung und werden nicht automatisch geschwärzt. Bitte prüfen.', analysis_done:'Analyse fertig. Bitte jede Buchung prüfen, dann exportieren.',
+  read_failed:'Die Datei konnte nicht gelesen werden: {e}. Ist sie passwortgeschützt? Dann zuerst das Passwort entfernen.',
+  not_pdf:'Bitte eine PDF-Datei wählen.', sample_failed:'Das Beispiel konnte nicht erzeugt werden: {e}',
+  libs_failed:'Die Bibliotheken pdf.js oder pdf-lib konnten nicht geladen werden. Ohne Internetverbindung zu cdnjs funktioniert der Prototyp nicht.',
+  sha_na:'nicht verfügbar', out_suffix:'-geschwaerzt.pdf'
+},
+en:{
+  claim:'Redact bank statements for public authorities. Legally sound, locally in your browser.', badge:'Prototype 0.1 · Apache-2.0',
+  step1:'Step 1 · File', h_file:'Bank statement as PDF', drop:'Drop a PDF here or choose one. The file stays on your device.', choose:'Choose PDF', sample:'Load sample', file:'File', pages:'Pages',
+  note_local:'Everything runs in your browser. Apart from loading the two libraries pdf.js and pdf-lib from cdnjs, the page makes no connections.',
+  step2:'Step 2 · Rules', h_rules:'What gets redacted', mode:'Mode', strict:'Strict', extended:'Extended',
+  mode_strict:'Strict: only expenses matching an active category. This is what the Federal Social Court ruling allows.',
+  mode_ext:'Extended: payee and purpose of all expenses. Goes beyond the ruling; the agency may ask questions. Amounts stay visible.',
+  custom_label:'Custom terms (comma-separated)', custom_ph:'e.g. Dr. Berger, support group',
+  legal_head:'Legal basis.', legal_body:'German Federal Social Court (BSG), ruling of 19 Sept 2008, B 14 AS 45/07 R: for expenses, payee and purpose may be redacted where they reveal special categories of personal data (§ 67 (12) SGB X, Art. 9 GDPR). Amounts, balances and all income stay visible.',
+  show_rules:'Show rule pack as JSON',
+  grp_art9:'Special categories (Art. 9 GDPR) · covered by the ruling', grp_optional:'Other sensitive data · not explicitly covered', grp_custom:'Custom terms', hits:'{n} hits',
+  step3:'Step 3 · Export', h_export:'Create redacted PDF',
+  note_export:'All pages are rebuilt as images: there is no text left behind the bars. A redaction record is attached with the date and amount of every partially redacted transaction, the legal basis and the SHA-256 checksum of the original. The kind of data is never named.',
+  btn_export:'Create PDF', btn_download:'Download', download_hint:'If the download does not start, check whether your browser blocks downloads for this page.',
+  protocol_preview:'Redaction record (preview)', protocol_lang:'The record is written in German because the receiving German authority has to read it.', no_file_analyzed:'No file analysed yet.',
+  review:'Review', h_review:'Check every transaction before exporting', lg_bar:'will be redacted', lg_cat:'match, category off', lg_flag:'direction unclear, please check', lg_in:'income, stays visible',
+  tap_hint:'Tap a transaction to toggle its redaction.', fit:'Fit',
+  tx:'Transactions', h_tx:'Detected transactions', result:'Result', h_result:'This is the file you hand over',
+  proto:'Prototype 0.1', source:'Source code on GitHub', no_advice:'Not legal advice. If in doubt, ask a social counselling centre.',
+  no_file:'No file loaded yet.', no_tx:'No transactions detected.', page_of:'Page {i} of {n}', page_n:'Page {i}', protocol:'Record', page_abbr:'p. {i}',
+  booking:'Transaction', redacted_a:', redacted', visible_a:', visible', income:'Income', unclear:'Direction unclear', expense:'Expense',
+  st_on:'Redacted', st_off:'Visible', st_in:'Stays visible',
+  s_tx:'transactions', s_out:'expenses', s_in:'income', s_red:'redacted', s_unk:'unclear', reset_manual:'Reset manual changes ({n})',
+  income_locked:'Income stays visible. The BSG ruling B 14 AS 45/07 R requires this.',
+  building_page:'Rebuilding page {i} of {n} …', attaching:'Attaching redaction record …', done:'Done: {kb} KB, {n} pages including the record.', export_failed:'Export failed: {e}',
+  dl_started:'Download started: {name}', dl_failed:'Download not possible: {e}',
+  sample_loaded:'Sample loaded: a fictional statement from “Musterbank”. Choose your own file above.', analyzing:'Analysing file …',
+  scan:'This PDF contains no text, probably a scan. Text recognition (OCR) is planned for version 2. Please use the digital statement from your online banking.',
+  no_tx_format:'Text found, but no transactions detected. The prototype does not know this format yet. Feedback with the bank name helps.',
+  unknown_dir:'{n} transactions have no recognisable direction and are not redacted automatically. Please check them.', analysis_done:'Analysis complete. Please check every transaction, then export.',
+  read_failed:'The file could not be read: {e}. Is it password-protected? Remove the password first.',
+  not_pdf:'Please choose a PDF file.', sample_failed:'The sample could not be generated: {e}',
+  libs_failed:'The libraries pdf.js or pdf-lib could not be loaded. Without an internet connection to cdnjs the prototype does not work.',
+  sha_na:'not available', out_suffix:'-redacted.pdf'
+}};
+let LANG='de';
+function t(key,vars){ let s=(I18N[LANG]&&I18N[LANG][key])??I18N.de[key]??key; if(vars) for(const k in vars) s=s.replace('{'+k+'}',vars[k]); return s; }
+const catLabel=c=>LANG==='en'&&c.label_en?c.label_en:c.label;
+const catHint=c=>LANG==='en'&&c.hint_en?c.hint_en:c.hint;
+function applyStatic(){
+  document.documentElement.lang=LANG;
+  document.querySelectorAll('[data-i18n]').forEach(e=>{e.textContent=t(e.dataset.i18n);});
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(e=>{e.placeholder=t(e.dataset.i18nPlaceholder);});
+  document.querySelectorAll('[data-i18n-aria]').forEach(e=>{e.setAttribute('aria-label',t(e.dataset.i18nAria));});
+  const pl=document.querySelector('[data-i18n="protocol_lang"]'); if(pl) pl.hidden=!t('protocol_lang');
+  document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===LANG?'true':'false'));
+}
+function setLang(l){
+  LANG=I18N[l]?l:'de';
+  try{localStorage.setItem('sichtschutz-lang',LANG);}catch(e){}
+  applyStatic();
+  if(state.pages.length){ state.pages.forEach((pg,i)=>{ const lab=pg.layer&&pg.layer.parentElement&&pg.layer.parentElement.parentElement.querySelector('.pagelabel'); if(lab) lab.textContent=t('page_of',{i:i+1,n:state.pages.length}); }); }
+  renderOverlays(); renderList(); renderStats(); renderCats(); renderProtocolPreview();
+}
+function initLang(){
+  let l=null; try{l=localStorage.getItem('sichtschutz-lang');}catch(e){}
+  if(!l) l=(navigator.language||'de').toLowerCase().startsWith('de')?'de':'en';
+  LANG=I18N[l]?l:'de'; applyStatic();
+}
 const el=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;};
 
-/* ---------- Regelwerk ---------- */
-/* Begriffe: normalisiert (klein, ae/oe/ue/ss). Bis 4 Zeichen: muss am Wortanfang stehen. Länger: Teilwort genügt.
-   "=begriff" erzwingt Wortanfang, "begriff=" erzwingt Wortende. */
+/* ---------- Rule pack ---------- */
+/* Terms are normalised (lower-case, ae/oe/ue/ss). Up to 4 characters: must start a word. Longer: substring match.
+   "=term" forces word start, "term=" forces word end. */
 const RULEPACK={
   id:'de-sgb-x-67-12', version:'0.1', language:'de',
   source:'BSG 19.09.2008, B 14 AS 45/07 R; § 67 Abs. 12 SGB X; Art. 9 DSGVO',
   categories:[
-    {id:'gesundheit',label:'Gesundheit',group:'art9',on:true,hint:'Ärzte, Apotheken, Therapie, Kliniken, Zuzahlungen',
+    {id:'gesundheit',label:'Gesundheit',label_en:'Health',group:'art9',on:true,hint:'Ärzte, Apotheken, Therapie, Kliniken, Zuzahlungen',hint_en:'Doctors, pharmacies, therapy, clinics, co-payments',
      terms:['apotheke','praxis','dr. med','dr.med','arzt','aerzt','zahnarzt','hausarzt','facharzt','frauenarzt','kinderarzt','klinik','krankenhaus','hospital','therapie','therapeut','psycho','physio','logopaed','ergotherap','hebamme','sanitaetshaus','hoerakustik','hoergeraet','=reha','medizin','medical','pharma','orthopaed','shop-apotheke','docmorris','medikament','rezept','zuzahlung','pflegedienst','pflegeheim','suchtberatung','drogenberatung','aidshilfe','=hiv=','schwangerschaft','pro familia','=kur=','dialyse','impf','krankentransport','heilpraktik']},
-    {id:'religion',label:'Religion / Weltanschauung',group:'art9',on:true,hint:'Kirchen, Gemeinden, Moscheen, religiöse Spenden',
+    {id:'religion',label:'Religion / Weltanschauung',label_en:'Religion / belief',group:'art9',on:true,hint:'Kirchen, Gemeinden, Moscheen, religiöse Spenden',hint_en:'Churches, congregations, mosques, religious donations',
      terms:['kirche','kirchen','kirchgemeinde','kirchengemeinde','pfarr','bistum','erzbistum','dioezese','evangelisch','katholisch','kath.','ev.-luth','ev. kirche','moschee','islam','ditib','igmg','synagoge','juedisch','jewish','buddhist','hindu','sikh','zeugen jehovas','freikirche','adventisten','baptisten','mennoniten','humanist','freidenker','kirchensteuer','kirchgeld','kollekte','missionswerk','caritas','diakonie','gemeinde st','pfingst']},
-    {id:'gewerkschaft',label:'Gewerkschaft',group:'art9',on:true,hint:'Mitgliedsbeiträge, Gewerkschaftskassen',
+    {id:'gewerkschaft',label:'Gewerkschaft',label_en:'Trade union',group:'art9',on:true,hint:'Mitgliedsbeiträge, Gewerkschaftskassen',hint_en:'Membership fees, union funds',
      terms:['gewerkschaft','ig metall','igmetall','ig bau','ig bce','ver.di','verdi','=gew=','=igm=','=evg=','=ngg=','=dgb=','=dbb=','beamtenbund','marburger bund','komba','=gdp=','=gdl=','=ufo=','vereinigung cockpit']},
-    {id:'politik',label:'Politische Meinung',group:'art9',on:true,hint:'Parteien, politische Organisationen, Kampagnen',
+    {id:'politik',label:'Politische Meinung',label_en:'Political opinion',group:'art9',on:true,hint:'Parteien, politische Organisationen, Kampagnen',hint_en:'Parties, political organisations, campaigns',
      terms:['partei','=spd','=cdu','=csu','=fdp','gruene','buendnis 90','=afd','die linke','=linke=','=volt=','piraten','=bsw=','oedp','freie waehler','tierschutzpartei','ortsverein','kreisverband','landesverband','jusos','junge union','gruene jugend','linksjugend','julis','campact','attac','amnesty','greenpeace','seebruecke','sea-watch','sea watch','mission lifeline','fridays for future','extinction rebellion','letzte generation','pegida','wahlkampf']},
-    {id:'sexualitaet',label:'Sexualität / Geschlecht',group:'art9',on:true,hint:'Sexualleben, sexuelle Orientierung, Geschlechtsidentität',
+    {id:'sexualitaet',label:'Sexualität / Geschlecht',label_en:'Sexuality / gender',group:'art9',on:true,hint:'Sexualleben, sexuelle Orientierung, Geschlechtsidentität',hint_en:'Sex life, sexual orientation, gender identity',
      terms:['lgbt','queer','=pride','=csd','schwul','lesb','=trans=','transgender','transident','transsexuell','nonbinaer','homosex','bisex','=gay','grindr','romeo','tinder','bumble','lovoo','parship','elitepartner','lovescout','onlyfans','erotik','=sex','amorelie','eis.de','orion','lovehoney','joyclub','fetisch','crossdress','dragqueen','drag show','swinger','escort','bordell','=fkk=']},
-    {id:'herkunft',label:'Herkunft / Migration',group:'art9',on:true,hint:'Ethnische Herkunft, Aufenthalt, Geldtransfer ins Ausland',
+    {id:'herkunft',label:'Herkunft / Migration',label_en:'Origin / migration',group:'art9',on:true,hint:'Ethnische Herkunft, Aufenthalt, Geldtransfer ins Ausland',hint_en:'Ethnic origin, residence status, money transfers abroad',
      terms:['auslaender','auslaenderbehoerde','migra','integrationskurs','asyl','fluecht','konsulat','botschaft','embassy','western union','moneygram','ria money','remitly','worldremit','einbuergerung','aufenthaltstitel','visum','sinti','=roma=','afro','landsmannschaft','heimatverein']},
-    {id:'recht',label:'Recht / Schulden',group:'optional',on:false,hint:'Nicht Art. 9 DSGVO. Schwärzung nur mit Begründung.',
+    {id:'recht',label:'Recht / Schulden',label_en:'Legal / debt',group:'optional',on:false,hint:'Nicht Art. 9 DSGVO. Schwärzung nur mit Begründung.',hint_en:'Not Art. 9 GDPR. Redact only with a reason.',
      terms:['inkasso','rechtsanwalt','rechtsanwaelt','kanzlei','anwalt','gerichtskasse','justizkasse','landesjustizkasse','amtsgericht','landgericht','gerichtsvollzieher','vollstreckung','pfaend','mahn','schuldnerberatung','insolvenz','treuhaender','bewaehrungshilfe','=jva=','justizvollzug','bussgeld','ordnungswidrigkeit']},
-    {id:'soziales',label:'Beratung / Soziales',group:'optional',on:false,hint:'Nicht Art. 9 DSGVO. Schwärzung nur mit Begründung.',
+    {id:'soziales',label:'Beratung / Soziales',label_en:'Counselling / social',group:'optional',on:false,hint:'Nicht Art. 9 DSGVO. Schwärzung nur mit Begründung.',hint_en:'Not Art. 9 GDPR. Redact only with a reason.',
      terms:['beratungsstelle','frauenhaus','frauenberatung','gewaltschutz','weisser ring','telefonseelsorge','sozialberatung','=tafel','=sucht','anonyme alkoholiker','selbsthilfe','obdachlos','wohnungslos','bahnhofsmission','=awo=','sozialdienst']},
-    {id:'eigene',label:'Eigene Begriffe',group:'custom',on:true,hint:'Aus dem Feld unten. Gilt nur in dieser Sitzung.',terms:[]}
+    {id:'eigene',label:'Eigene Begriffe',label_en:'Custom terms',group:'custom',on:true,hint:'Aus dem Feld unten. Gilt nur in dieser Sitzung.',hint_en:'From the field below. Applies to this session only.',terms:[]}
   ]
 };
 function normalize(s){
@@ -323,7 +430,7 @@ function compileTerm(raw){
 const CATS=RULEPACK.categories.map(c=>({...c,compiled:c.terms.map(compileTerm).filter(Boolean)}));
 const CAT_BY_ID=Object.fromEntries(CATS.map(c=>[c.id,c]));
 
-/* ---------- Muster ---------- */
+/* ---------- Patterns ---------- */
 const RX_DATE_FULL=/^\d{2}\.\d{2}\.(\d{4}|\d{2})?$/;
 const RX_DATE_LEAD=/^\s*\d{2}\.\d{2}\.(\d{4}|\d{2})?(?!\d)/;
 const RX_DATE_G=/(?<!\d)(\d{2})\.(\d{2})\.(\d{4}|\d{2})?(?!\d)/g;
@@ -336,11 +443,11 @@ const RX_BOOK_FULL=new RegExp('^(?:(?:'+BOOKTYPES+')(?:[\\s/\\-]+|$))+$','i');
 const RX_PROTECT_STRONG=/\b(kontostand|saldo|salden|uebertrag|übertrag|zwischensumme|summe|endsaldo|anfangssaldo|rechnungsabschluss)\b/i;
 const RX_PROTECT_WEAK=/\b(kontoinhaber|kontonummer|konto-nr|iban|bic|blz|auszug|auszugsnummer|blatt|seite\s*\d|zeitraum|erstellt|datum|buchungstag|buchung|valuta|vorgang|betrag|umsaetze|umsätze|verfuegbar|verfügbar|dispo|kreditlimit|zinssatz|kontoauszug|girokonto|kundennummer|kunden-nr)\b/i;
 
-/* ---------- Zustand ---------- */
+/* ---------- State ---------- */
 const state={bytes:null,name:'',pdf:null,pages:[],txs:[],sha:'',mode:'streng',enabled:{},custom:[],outBytes:null,outName:'',zoom:'fit',loading:false};
 CATS.forEach(c=>state.enabled[c.id]=c.on);
 
-/* ---------- Textgeometrie ---------- */
+/* ---------- Text geometry ---------- */
 const measureCtx=document.createElement('canvas').getContext('2d');
 measureCtx.font='20px Helvetica, Arial, sans-serif';
 function ratioAt(str,k){
@@ -406,7 +513,7 @@ function runAt(L,idx){
   return {run:L.runs[0],local:0};
 }
 
-/* ---------- Buchungen erkennen ---------- */
+/* ---------- Transaction detection ---------- */
 function segmentPage(lines,pageIndex){
   const txs=[]; let cur=null, prev=null;
   for(const L of lines){
@@ -499,7 +606,7 @@ function recompute(){
   $('#btn-export').disabled=!state.pdf;
 }
 
-/* ---------- Schwärzungsflächen ---------- */
+/* ---------- Redaction rectangles ---------- */
 function complement(keep,len){
   keep=keep.filter(k=>k[1]>k[0]).sort((a,b)=>a[0]-b[0]);
   const spans=[]; let pos=0;
@@ -540,7 +647,7 @@ function txBox(t,pg){
   return {x:pg.colX0,y:Math.min(...t.lines.map(l=>l.top))-1,w:pg.colX1-pg.colX0,h:Math.max(...t.lines.map(l=>l.bottom))-Math.min(...t.lines.map(l=>l.top))+2};
 }
 
-/* ---------- Darstellung ---------- */
+/* ---------- Rendering ---------- */
 function pct(v,total){return (100*v/total).toFixed(3)+'%';}
 async function renderPages(){
   const wrap=$('#pages'); wrap.innerHTML='';
@@ -556,7 +663,7 @@ async function renderPages(){
     const ctx=canvas.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
     await pg.page.render({canvasContext:ctx,viewport:vp}).promise;
     const layer=el('div','layer'); pg.layer=layer;
-    pageEl.append(canvas,layer); box.append(pageEl,el('div','pagelabel','Seite '+(pg.index+1)+' von '+state.pages.length));
+    pageEl.append(canvas,layer); box.append(pageEl,el('div','pagelabel',t('page_of',{i:pg.index+1,n:state.pages.length})));
     wrap.append(box);
   }
   renderOverlays();
@@ -565,21 +672,21 @@ function renderOverlays(){
   for(const pg of state.pages){
     if(!pg.layer) continue; const layer=pg.layer; layer.innerHTML='';
     const txs=state.txs.filter(t=>t.page===pg.index);
-    for(const t of txs){
-      const on=effective(t);
-      if(on) for(const r of txRects(t)){
+    for(const tx of txs){
+      const on=effective(tx);
+      if(on) for(const r of txRects(tx)){
         const b=el('div','bar'); b.style.left=pct(r.x,pg.w); b.style.top=pct(r.y,pg.h); b.style.width=pct(r.w,pg.w); b.style.height=pct(r.h,pg.h); layer.append(b);
       }
-      const hb=txBox(t,pg); const h=el('button','hit'); h.type='button';
+      const hb=txBox(tx,pg); const h=el('button','hit'); h.type='button';
       h.style.left=pct(hb.x,pg.w); h.style.top=pct(hb.y,pg.h); h.style.width=pct(hb.w,pg.w); h.style.height=pct(hb.h,pg.h);
-      if(t.direction==='in') h.classList.add('is-in');
-      else if(t.direction==='unknown') h.classList.add('is-flag');
-      else if(!on&&t.cats.length) h.classList.add('is-cat');
-      if(t.manual!==null) h.classList.add('is-manual');
+      if(tx.direction==='in') h.classList.add('is-in');
+      else if(tx.direction==='unknown') h.classList.add('is-flag');
+      else if(!on&&tx.cats.length) h.classList.add('is-cat');
+      if(tx.manual!==null) h.classList.add('is-manual');
       h.setAttribute('aria-pressed',on?'true':'false');
-      h.setAttribute('aria-label',(t.date||'Buchung')+' '+fmtAmt(t)+(on?', geschwärzt':', sichtbar'));
+      h.setAttribute('aria-label',(tx.date||t('booking'))+' '+fmtAmt(tx)+(on?t('redacted_a'):t('visible_a')));
       h.title=h.getAttribute('aria-label');
-      h.addEventListener('click',()=>toggle(t));
+      h.addEventListener('click',()=>toggle(tx));
       layer.append(h);
     }
   }
@@ -589,66 +696,64 @@ function fmtAmt(t){
   const v=t.amt.value.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2});
   return (t.direction==='out'?'-':t.direction==='in'?'+':'')+v;
 }
-function toggle(t){
-  if(t.direction==='in'){toast('Einnahmen bleiben sichtbar. Das verlangt das BSG-Urteil B 14 AS 45/07 R.');return;}
-  const next=!effective(t); t.manual=(next===t.auto)?null:next;
+function toggle(tx){
+  if(tx.direction==='in'){toast(t('income_locked'));return;}
+  const next=!effective(tx); tx.manual=(next===tx.auto)?null:next;
   renderOverlays(); renderList(); renderStats(); renderProtocolPreview();
 }
 function renderList(){
   const list=$('#txlist'); list.innerHTML='';
-  if(!state.txs.length){list.append(el('p','muted small',state.pdf?'Keine Buchungen erkannt.':'Noch keine Datei geladen.'));return;}
-  for(const t of state.txs){
+  if(!state.txs.length){list.append(el('p','muted small',state.pdf?t('no_tx'):t('no_file')));return;}
+  for(const tx of state.txs){
     const row=el('div','tx');
-    row.append(el('span','d',t.date||'–'));
-    const a=el('span','a'+(t.direction==='in'?' pos':''),fmtAmt(t)); row.append(a);
+    row.append(el('span','d',tx.date||'–'));
+    const a=el('span','a'+(tx.direction==='in'?' pos':''),fmtAmt(tx)); row.append(a);
     const mid=el('div','t');
-    if(t.direction==='in') mid.append(el('span','chip in','Einnahme'));
-    else if(t.direction==='unknown') mid.append(el('span','chip warn','Richtung unklar'));
-    else mid.append(el('span','chip','Ausgabe'));
-    for(const c of t.cats){ const chip=el('span','chip cat'+(state.enabled[c.id]?'':' off'),CAT_BY_ID[c.id].label+' · „'+c.term+'“'); mid.append(chip); }
-    if(state.pages.length>1) mid.append(el('span','chip','S. '+(t.page+1)));
-    const d=el('span','desc',t.desc||''); d.title=t.desc||''; mid.append(d);
+    if(tx.direction==='in') mid.append(el('span','chip in',t('income')));
+    else if(tx.direction==='unknown') mid.append(el('span','chip warn',t('unclear')));
+    else mid.append(el('span','chip',t('expense')));
+    for(const c of tx.cats){ const chip=el('span','chip cat'+(state.enabled[c.id]?'':' off'),catLabel(CAT_BY_ID[c.id])+' · „'+c.term+'“'); mid.append(chip); }
+    if(state.pages.length>1) mid.append(el('span','chip',t('page_abbr',{i:tx.page+1})));
+    const d=el('span','desc',tx.desc||''); d.title=tx.desc||''; mid.append(d);
     row.append(mid);
-    const on=effective(t);
-    const st=el('button','st'+(on?' on':''),on?'Geschwärzt':'Sichtbar'); st.type='button';
-    if(t.direction==='in'){st.disabled=true;st.textContent='Bleibt sichtbar';}
+    const on=effective(tx);
+    const st=el('button','st'+(on?' on':''),on?t('st_on'):t('st_off')); st.type='button';
+    if(tx.direction==='in'){st.disabled=true;st.textContent=t('st_in');}
     st.setAttribute('aria-pressed',on?'true':'false');
-    st.addEventListener('click',()=>toggle(t));
+    st.addEventListener('click',()=>toggle(tx));
     row.append(st);
     list.append(row);
   }
 }
 function renderStats(){
   const s=$('#stats'); s.innerHTML='';
-  if(!state.pdf){s.append(el('span','muted small','Noch keine Datei geladen.'));return;}
+  if(!state.pdf){s.append(el('span','muted small',t('no_file')));return;}
   const n=state.txs.length, out=state.txs.filter(t=>t.direction==='out').length, inn=state.txs.filter(t=>t.direction==='in').length;
   const unk=state.txs.filter(t=>t.direction==='unknown').length, red=state.txs.filter(effective).length, man=state.txs.filter(t=>t.manual!==null).length;
   const item=(num,label,cls)=>{const x=el('span',cls||'');x.append(el('b',null,String(num)),document.createTextNode(label));return x;};
-  s.append(item(n,'Buchungen'),item(out,'Ausgaben'),item(inn,'Einnahmen'),item(red,'geschwärzt'));
-  if(unk) s.append(item(unk,'unklar','warn'));
-  if(man){const b=el('button','btn btn-ghost small','Manuelle Änderungen zurücksetzen ('+man+')');b.type='button';b.style.minHeight='30px';b.style.padding='4px 10px';b.addEventListener('click',()=>{state.txs.forEach(t=>t.manual=null);recompute();});s.append(b);}
+  s.append(item(n,' '+t('s_tx')),item(out,' '+t('s_out')),item(inn,' '+t('s_in')),item(red,' '+t('s_red')));
+  if(unk) s.append(item(unk,' '+t('s_unk'),'warn'));
+  if(man){const b=el('button','btn btn-ghost small',t('reset_manual',{n:man}));b.type='button';b.style.minHeight='30px';b.style.padding='4px 10px';b.addEventListener('click',()=>{state.txs.forEach(t=>t.manual=null);recompute();});s.append(b);}
 }
 function renderCats(){
   const box=$('#cats'); box.innerHTML='';
-  const groups=[['art9','Besondere Kategorien (Art. 9 DSGVO) · vom Urteil gedeckt'],['optional','Weitere schutzwürdige Angaben · nicht ausdrücklich gedeckt'],['custom','Eigene Begriffe']];
+  const groups=[['art9',t('grp_art9')],['optional',t('grp_optional')],['custom',t('grp_custom')]];
   for(const [gid,glabel] of groups){
     box.append(el('div','group',glabel));
     for(const c of CATS.filter(c=>c.group===gid)){
       const row=el('div','cat');
       const cb=document.createElement('input'); cb.type='checkbox'; cb.id='cat-'+c.id; cb.checked=!!state.enabled[c.id];
       cb.addEventListener('change',()=>{state.enabled[c.id]=cb.checked;recompute();});
-      const lab=document.createElement('label'); lab.htmlFor=cb.id; lab.append(document.createTextNode(c.label),el('span','hint',c.hint));
+      const lab=document.createElement('label'); lab.htmlFor=cb.id; lab.append(document.createTextNode(catLabel(c)),el('span','hint',catHint(c)));
       const hits=state.txs.filter(t=>t.cats.some(x=>x.id===c.id)).length;
-      const n=el('span','n'+(hits?' hot':''),hits?hits+' Treffer':'–');
+      const n=el('span','n'+(hits?' hot':''),hits?t('hits',{n:hits}):'–');
       row.append(cb,lab,n); box.append(row);
     }
   }
-  const txt='Streng: nur Ausgaben mit Treffern in den aktiven Kategorien. Entspricht dem BSG-Urteil.';
-  const txt2='Erweitert: Empfänger und Verwendungszweck aller Ausgaben. Geht über das Urteil hinaus; das Jobcenter kann nachfragen. Beträge bleiben sichtbar.';
-  $('#mode-note').textContent=state.mode==='streng'?txt:txt2;
+  $('#mode-note').textContent=state.mode==='streng'?t('mode_strict'):t('mode_ext');
 }
 
-/* ---------- Protokoll ---------- */
+/* ---------- Redaction record (always German: it is read by the German authority) ---------- */
 function protocolData(){
   const red=state.txs.filter(effective);
   const sum=red.reduce((a,t)=>a+(t.amt?t.amt.value:0),0);
@@ -684,7 +789,7 @@ function protocolLines(p){
   return L;
 }
 function renderProtocolPreview(){
-  $('#protocol-preview').textContent=state.pdf?protocolLines(protocolData()).join('\n'):'Noch keine Datei analysiert.';
+  $('#protocol-preview').textContent=state.pdf?protocolLines(protocolData()).join('\n'):t('no_file_analyzed');
 }
 
 /* ---------- Export ---------- */
@@ -707,7 +812,7 @@ async function exportPdf(){
     const n=state.pages.length;
     for(let i=0;i<n;i++){
       const pg=state.pages[i];
-      status.textContent='Seite '+(i+1)+' von '+n+' wird neu aufgebaut …'; bar.style.width=Math.round(80*i/n)+'%';
+      status.textContent=t('building_page',{i:i+1,n}); bar.style.width=Math.round(80*i/n)+'%';
       const scale=Math.min(2.2,2200/pg.w);
       const vp=pg.page.getViewport({scale});
       const canvas=document.createElement('canvas'); canvas.width=Math.round(vp.width); canvas.height=Math.round(vp.height);
@@ -720,7 +825,7 @@ async function exportPdf(){
       const p=out.addPage([pg.w,pg.h]); p.drawImage(img,{x:0,y:0,width:pg.w,height:pg.h});
       await new Promise(r=>setTimeout(r,0));
     }
-    status.textContent='Schwärzungsprotokoll wird angehängt …'; bar.style.width='85%';
+    status.textContent=t('attaching'); bar.style.width='85%';
     const font=await out.embedFont(PDFLib.StandardFonts.Helvetica), bold=await out.embedFont(PDFLib.StandardFonts.HelveticaBold);
     const lines=protocolLines(protocolData());
     const size=10, lh=14, margin=42, W=595.28, H=841.89, maxW=W-2*margin;
@@ -739,12 +844,12 @@ async function exportPdf(){
     page.drawText(safeAscii('Erzeugt mit Sichtschutz 0.1 (Prototyp). Keine Rechtsberatung.'),{x:margin,y:margin-16,size:8,font,color:PDFLib.rgb(0.4,0.42,0.45)});
     bar.style.width='95%';
     const bytes=await out.save();
-    state.outBytes=bytes; state.outName=(state.name||'kontoauszug').replace(/\.pdf$/i,'')+'-geschwaerzt.pdf';
-    bar.style.width='100%'; status.textContent='Fertig: '+(bytes.length/1024).toFixed(0)+' KB, '+(n+out.getPageCount()-n)+' Seiten inklusive Protokoll.';
+    state.outBytes=bytes; state.outName=(state.name||'kontoauszug').replace(/\.pdf$/i,'')+t('out_suffix');
+    bar.style.width='100%'; status.textContent=t('done',{kb:(bytes.length/1024).toFixed(0),n:out.getPageCount()});
     $('#download-name').textContent=state.outName; $('#download-box').hidden=false; $('#download-hint').hidden=false;
     await renderResult(bytes);
   }catch(e){
-    status.textContent='Export fehlgeschlagen: '+(e&&e.message?e.message:e);
+    status.textContent=t('export_failed',{e:(e&&e.message?e.message:e)});
     console.error(e);
   }finally{ btn.disabled=false; setTimeout(()=>{prog.hidden=true;},1200); }
 }
@@ -757,7 +862,7 @@ async function renderResult(bytes){
     const canvas=document.createElement('canvas'); canvas.width=Math.round(vp.width); canvas.height=Math.round(vp.height);
     const ctx=canvas.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
     await page.render({canvasContext:ctx,viewport:vp}).promise;
-    const th=el('div','thumb'); th.append(canvas,el('span',null,i<=state.pages.length?'Seite '+i:'Protokoll'));
+    const th=el('div','thumb'); th.append(canvas,el('span',null,i<=state.pages.length?t('page_n',{i}):t('protocol')));
     box.append(th);
   }
   $('#result').scrollIntoView({behavior:'smooth',block:'nearest'});
@@ -766,30 +871,17 @@ async function download(){
   if(!state.outBytes||download._busy) return;
   download._busy=true;
   try{
-    let cap=null;
-    if(cap){
-      try{
-        const r=await cap.save({filename:state.outName,data:new Blob([state.outBytes],{type:'application/pdf'})});
-        toast(r&&r.status==='saved'?'Gespeichert: '+state.outName:'Datei übergeben.');
-      }catch(e){
-        const code=e&&e.code;
-        if(code==='declined') toast('Speichern abgebrochen.');
-        else if(code==='rate_limited') toast('Bitte kurz warten und noch einmal tippen.');
-        else { toast('Speichern hier nicht möglich. Datei lokal oder über GitHub Pages öffnen.'); $('#download-hint').hidden=false; }
-      }
-      return;
-    }
     const blob=new Blob([state.outBytes],{type:'application/pdf'}); const url=URL.createObjectURL(blob);
     const a=document.createElement('a'); a.href=url; a.download=state.outName; a.rel='noopener'; document.body.append(a); a.click(); a.remove();
     setTimeout(()=>URL.revokeObjectURL(url),60000);
-    toast('Download gestartet: '+state.outName);
-  }catch(e){ toast('Download nicht möglich: '+e.message); }
+    toast(t('dl_started',{name:state.outName}));
+  }catch(e){ toast(t('dl_failed',{e:e.message})); }
   finally{ download._busy=false; }
 }
 
-/* ---------- Laden ---------- */
+/* ---------- Loading ---------- */
 async function sha256Hex(bytes){
-  if(!crypto||!crypto.subtle) return 'nicht verfügbar';
+  if(!crypto||!crypto.subtle) return t('sha_na');
   const h=await crypto.subtle.digest('SHA-256',bytes); return [...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,'0')).join('');
 }
 function setMsg(text,kind){
@@ -801,7 +893,7 @@ async function loadBytes(bytes,name,isSample){
   state.bytes=bytes; state.name=name; state.pdf=null; state.pages=[]; state.txs=[]; state.sha=''; state.outBytes=null;
   $('#pages').innerHTML=''; $('#result').hidden=true; $('#download-box').hidden=true; $('#download-hint').hidden=true; $('#export-status').hidden=true;
   $('#meta').hidden=false; $('#m-name').textContent=name+' · '+(bytes.length/1024).toFixed(0)+' KB'; $('#m-pages').textContent='…'; $('#m-sha').textContent='…';
-  setMsg(isSample?'Beispiel geladen: ein erfundener Kontoauszug der „Musterbank“. Eigene Datei oben auswählen.':'Datei wird analysiert …','ok');
+  setMsg(isSample?t('sample_loaded'):t('analyzing'),'ok');
   try{
     const shaP=sha256Hex(bytes);
     const pdf=await pdfjsLib.getDocument({data:bytes.slice()}).promise;
@@ -818,45 +910,45 @@ async function loadBytes(bytes,name,isSample){
     }
     resolveDirections(state.txs);
     state.sha=await shaP; $('#m-sha').textContent=state.sha;
-    if(!items) setMsg('Diese PDF enthält keinen Text, vermutlich ein Scan. Texterkennung (OCR) ist für Version 2 geplant. Bitte den digitalen Kontoauszug aus dem Online-Banking verwenden.','warn');
-    else if(!state.txs.length) setMsg('Text gefunden, aber keine Buchungen erkannt. Dieses Format kennt der Prototyp noch nicht. Eine Rückmeldung mit Bankname hilft.','warn');
+    if(!items) setMsg(t('scan'),'warn');
+    else if(!state.txs.length) setMsg(t('no_tx_format'),'warn');
     else if(!isSample){
       const unk=state.txs.filter(t=>t.direction==='unknown').length;
-      setMsg(unk?unk+' Buchungen haben keine erkennbare Richtung und werden nicht automatisch geschwärzt. Bitte prüfen.':'Analyse fertig. Bitte jede Buchung prüfen, dann exportieren.', unk?'warn':'ok');
+      setMsg(unk?t('unknown_dir',{n:unk}):t('analysis_done'), unk?'warn':'ok');
     }
     await renderPages();
     recompute();
   }catch(e){
     console.error(e);
-    setMsg('Die Datei konnte nicht gelesen werden: '+(e&&e.message?e.message:e)+'. Ist sie passwortgeschützt? Dann zuerst das Passwort entfernen.','danger');
+    setMsg(t('read_failed',{e:(e&&e.message?e.message:e)}),'danger');
     renderList(); renderStats(); renderProtocolPreview();
   }finally{ state.loading=false; $('#btn-export').disabled=!state.pdf; }
 }
 async function loadFile(file){
   if(!file) return;
-  if(!/pdf$/i.test(file.name)&&file.type!=='application/pdf'){toast('Bitte eine PDF-Datei wählen.');return;}
+  if(!/pdf$/i.test(file.name)&&file.type!=='application/pdf'){toast(t('not_pdf'));return;}
   const buf=await file.arrayBuffer(); await loadBytes(new Uint8Array(buf),file.name,false);
 }
 
-/* ---------- Beispiel ---------- */
+/* ---------- Sample statement (synthetic, German layout) ---------- */
 const SAMPLE_TX=[
-  ['01.09.2026','Gutschrift','Jobcenter Kreis Wesel Buergergeld 09/2026 BG-Nr. 12345BG0067890','+563,00'],
-  ['01.09.2026','Lastschrift','Wohnbau Dinslaken GmbH Miete 09/2026 Mieter-Nr. 4711','-420,00'],
-  ['02.09.2026','Lastschrift','Stadtwerke Dinslaken Strom Abschlag 09/2026 Vertrag 998877','-62,00'],
-  ['03.09.2026','Kartenzahlung','REWE SAGT DANKE. 2234 Dinslaken girocard 02.09.2026 18:41','-54,12'],
-  ['04.09.2026','Lastschrift','Apotheke am Neutor Dinslaken Rezeptgebuehr Zuzahlung','-10,00'],
-  ['05.09.2026','Kartenzahlung','DM Drogeriemarkt Dinslaken girocard 05.09.2026 11:02','-18,45'],
-  ['08.09.2026','Lastschrift','Kath. Kirchengemeinde St. Vincentius Spende September','-15,00'],
-  ['10.09.2026','Lastschrift','IG Metall Mitgliedsbeitrag 09/2026 Mitgl.-Nr. 77001','-21,50'],
-  ['12.09.2026','Ueberweisung','Praxis Dr. med. Yilmaz Privatrezept Rechnung 2026-311','-34,80'],
-  ['14.09.2026','Kartenzahlung','ALDI SUED Dinslaken girocard 14.09.2026 17:20','-41,33'],
-  ['15.09.2026','Lastschrift','Telekom Deutschland GmbH Mobilfunk 09/2026 Kd-Nr. 55021','-19,95'],
-  ['17.09.2026','Lastschrift','SPD Ortsverein Dinslaken Mitgliedsbeitrag 3. Quartal','-6,00'],
-  ['19.09.2026','Kartenzahlung','Queer Cafe Duisburg girocard 19.09.2026 21:15','-12,40'],
-  ['22.09.2026','Gutschrift','Erika Muster Rueckzahlung Auslage Geburtstagsgeschenk','+50,00'],
-  ['24.09.2026','Lastschrift','Rechtsanwaltskanzlei Berg & Partner Erstberatung Mietsache','-90,00'],
-  ['26.09.2026','Kartenzahlung','DB Vertrieb GmbH Deutschlandticket Oktober','-58,00'],
-  ['29.09.2026','Lastschrift','DITIB Moschee Dinslaken e.V. Spende','-10,00'],
+  ['01.09.2026','Gutschrift','Studierendenwerk Frankfurt BAfoeG 09/2026 Foerder-Nr. 2026-04517','+812,00'],
+  ['01.09.2026','Lastschrift','ABG Frankfurt Holding Miete 09/2026 Objekt 3341-07','-510,00'],
+  ['02.09.2026','Lastschrift','Mainova AG Strom Abschlag 09/2026 Vertrag 7761203','-48,00'],
+  ['03.09.2026','Kartenzahlung','REWE SAGT DANKE. 4410 Frankfurt girocard 02.09.2026 18:12','-47,88'],
+  ['04.09.2026','Lastschrift','Roemer-Apotheke Frankfurt Zuzahlung Rezept','-10,00'],
+  ['05.09.2026','Kartenzahlung','DM Drogeriemarkt Frankfurt Hauptwache girocard 05.09.2026','-16,20'],
+  ['08.09.2026','Lastschrift','Ev. Kirchengemeinde Bockenheim Spende September','-15,00'],
+  ['10.09.2026','Lastschrift','ver.di Bezirk Frankfurt Mitgliedsbeitrag 09/2026 Mitgl.-Nr. 331908','-18,70'],
+  ['12.09.2026','Ueberweisung','Zahnarztpraxis Dr. Keller Eigenanteil Rechnung 2026-0882','-62,40'],
+  ['14.09.2026','Kartenzahlung','ALDI SUED Frankfurt Bornheim girocard 14.09.2026 17:40','-39,15'],
+  ['15.09.2026','Lastschrift','Vodafone GmbH Mobilfunk 09/2026 Kd-Nr. 88450213','-14,99'],
+  ['17.09.2026','Lastschrift','Greenpeace e.V. Foerderbeitrag 3. Quartal','-9,00'],
+  ['19.09.2026','Kartenzahlung','Buchhandlung Ypsilon Frankfurt girocard 19.09.2026','-24,90'],
+  ['22.09.2026','Gutschrift','Jonas Beispiel Rueckzahlung Konzertkarte','+35,00'],
+  ['24.09.2026','Lastschrift','Kanzlei Weber Mietrecht Erstberatung','-90,00'],
+  ['26.09.2026','Kartenzahlung','RMV Deutschlandticket Oktober','-58,00'],
+  ['29.09.2026','Lastschrift','Physiotherapie am Main Rezeptgebuehr','-20,00'],
   ['30.09.2026','Entgelt','Kontofuehrung 09/2026 Girokonto Basis','-4,90']
 ];
 async function makeSample(){
@@ -868,16 +960,16 @@ async function makeSample(){
   const right=(t,xr,y,o={})=>{const f=o.bold?bold:font;draw(t,xr-f.widthOfTextAtSize(t,o.size||9),y,o);};
   const rule=y=>page.drawLine({start:{x:40,y},end:{x:555,y},thickness:0.6,color:PDFLib.rgb(0.6,0.62,0.64)});
   let y=796;
-  draw('Musterbank Niederrhein',40,y,{size:15,bold:true}); right('Kontoauszug 9/2026',555,y,{size:10,bold:true}); y-=15;
+  draw('Musterbank Frankfurt',40,y,{size:15,bold:true}); right('Kontoauszug 9/2026',555,y,{size:10,bold:true}); y-=15;
   draw('Beispiel fuer den Prototyp Sichtschutz. Alle Angaben sind erfunden.',40,y,{size:8}); right('Blatt 1 von 1',555,y,{size:8}); y-=26;
-  draw('Kontoinhaber: Max Muster',40,y); draw('Girokonto Basis',330,y); y-=13;
-  draw('IBAN: DE12 3456 7890 0000 1234 56',40,y); draw('BIC: MUSTDE55XXX',330,y); y-=13;
+  draw('Kontoinhaber: Lena Beispiel',40,y); draw('Girokonto Basis',330,y); y-=13;
+  draw('IBAN: DE89 3704 0044 0532 0130 00',40,y); draw('BIC: MUSTDEFFXXX',330,y); y-=13;
   draw('Zeitraum: 01.09.2026 bis 30.09.2026',40,y); draw('Erstellt am 01.10.2026',330,y); y-=24;
   draw('Buchung',40,y,{bold:true}); draw('Valuta',96,y,{bold:true}); draw('Vorgang / Verwendungszweck',152,y,{bold:true}); right('Betrag EUR',555,y,{bold:true}); y-=5; rule(y); y-=13;
-  draw('Kontostand am 31.08.2026',40,y); right('412,37',555,y); y-=17;
+  draw('Kontostand am 31.08.2026',40,y); right('318,55',555,y); y-=17;
   for(const [d,type,desc,amt] of SAMPLE_TX){ draw(d,40,y); draw(d,96,y); draw(type,152,y); right(amt,555,y); y-=11; draw(desc,152,y); y-=15; }
-  y-=2; rule(y); y-=13; draw('Kontostand am 30.09.2026',40,y,{bold:true}); right('146,92',555,y,{bold:true});
-  draw('Musterbank Niederrhein · Dieses Dokument wurde fuer den Prototyp Sichtschutz erzeugt und ist kein echter Kontoauszug.',40,36,{size:7});
+  y-=2; rule(y); y-=13; draw('Kontostand am 30.09.2026',40,y,{bold:true}); right('176,43',555,y,{bold:true});
+  draw('Musterbank Frankfurt · Dieses Dokument wurde fuer den Prototyp Sichtschutz erzeugt. Alle Personen, Konten und Buchungen sind erfunden.',40,36,{size:7});
   return await doc.save();
 }
 
@@ -900,6 +992,7 @@ function wire(){
   $('#btn-export').addEventListener('click',exportPdf);
   $('#btn-download').addEventListener('click',download);
   document.querySelectorAll('.zoom button').forEach(b=>b.addEventListener('click',()=>setZoom(b.dataset.zoom)));
+  document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
   $('#rulepack-json').textContent=JSON.stringify(RULEPACK,null,1);
 }
 function setMode(m){
@@ -908,12 +1001,12 @@ function setMode(m){
 }
 async function loadSample(){
   try{ const bytes=await makeSample(); await loadBytes(bytes,'musterbank-kontoauszug-09-2026.pdf',true); }
-  catch(e){ console.error(e); setMsg('Das Beispiel konnte nicht erzeugt werden: '+e.message,'danger'); }
+  catch(e){ console.error(e); setMsg(t('sample_failed',{e:e.message}),'danger'); }
 }
 function init(){
-  wire(); renderCats(); renderList(); renderStats();
+  initLang(); wire(); renderCats(); renderList(); renderStats();
   if(typeof pdfjsLib==='undefined'||typeof PDFLib==='undefined'){
-    setMsg('Die Bibliotheken pdf.js oder pdf-lib konnten nicht geladen werden. Ohne Internetverbindung zu cdnjs funktioniert der Prototyp nicht.','danger');
+    setMsg(t('libs_failed'),'danger');
     return;
   }
   pdfjsLib.GlobalWorkerOptions.workerSrc=PDFJS_WORKER;
