@@ -3,7 +3,7 @@
 **Redact bank statements for public authorities – legally sound, locally in your browser, no upload.**
 *Deutsche Fassung weiter unten.*
 
-Try it: **https://lilith568.github.io/sichtschutz/** · Interface in English and German.
+Try it: **https://lilith568.github.io/sichtschutz/** (mirror: https://cdn.jsdelivr.net/gh/lilith568/sichtschutz@main/index.html) · Interface in English and German.
 
 ## The problem
 
@@ -58,7 +58,7 @@ Not legal advice. Agencies interpret the rules differently; if in doubt ask a co
 
 **Kontoauszüge für Behördenanträge rechtssicher schwärzen – lokal im Browser, ohne Upload.**
 
-Ausprobieren: **https://lilith568.github.io/sichtschutz/** · Oberfläche auf Deutsch und Englisch.
+Ausprobieren: **https://lilith568.github.io/sichtschutz/** (Spiegel: https://cdn.jsdelivr.net/gh/lilith568/sichtschutz@main/index.html) · Oberfläche auf Deutsch und Englisch.
 
 ## Das Problem
 
